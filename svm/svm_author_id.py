@@ -20,9 +20,12 @@ from sklearn.metrics import accuracy_score
 ### labels_train and labels_test are the corresponding item labels
 features_train, features_test, labels_train, labels_test = preprocess()
 
+# Reduce dataset for speed purposes (if necessary)
+# features_train = features_train[:len(features_train)/100]
+# labels_train = labels_train[:len(labels_train)/100]
 
 # Initialize classifier
-clf = svm.LinearSVC()
+clf = svm.SVC(kernel = 'rbf', C = 10000)
 
 # Train model (and time it)
 trainingBeganTime = time()
