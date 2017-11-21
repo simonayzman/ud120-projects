@@ -12,7 +12,8 @@ import sys
 from time import time
 sys.path.append("../tools/")
 from email_preprocess import preprocess
-
+from sklearn import svm
+from sklearn.metrics import accuracy_score
 
 ### features_train and features_test are the features for the training
 ### and testing datasets, respectively
@@ -20,6 +21,18 @@ from email_preprocess import preprocess
 features_train, features_test, labels_train, labels_test = preprocess()
 
 
+# Initialize classifier
+clf = svm.LinearSVC()
 
+# Train model (and time it)
+trainingBeganTime = time()
+clf.fit(features_train, labels_train)
+trainingFinishedTime = time()
 
+# Predict labels on test data (and determine accuracy)
+prediction = clf.predict(features_test)
+accuracy = accuracy_score(labels_test, prediction)
 
+# Provide useful metrics
+print "Training Time:", round(trainingFinishedTime - trainingBeganTime, 3), "s"
+print "Accuracy:", accuracy
